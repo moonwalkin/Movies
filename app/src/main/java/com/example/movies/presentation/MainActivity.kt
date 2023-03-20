@@ -9,6 +9,7 @@ import com.example.movies.R
 import com.example.movies.databinding.ActivityMainBinding
 import com.example.movies.domain.Movie
 import com.example.movies.presentation.fragments.MovieDetailsFragment
+import com.example.movies.presentation.fragments.TrailerFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,6 +31,14 @@ class MainActivity : AppCompatActivity(), Navigator {
 
     override fun showMovieDetails(movie: Movie) {
         launch(R.id.fromMovieToDetails, MovieDetailsFragment.createArgs(movie))
+    }
+
+    override fun close() {
+        navController.popBackStack()
+    }
+
+    override fun showTrailer(id: Int) {
+        launch(R.id.action_movieDetailsFragment_to_trailerFragment, TrailerFragment.createArgs(id))
     }
 
     private fun launch(destination: Int, args: Bundle? = null) {
