@@ -1,5 +1,6 @@
 package com.example.movies.presentation
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movies.data.Movie
@@ -19,12 +20,7 @@ class MoviesViewModel @Inject constructor(
 
     val movies = MutableSharedFlow<List<Movie>>()
 
-
-    init {
-        fetchMovies()
-    }
-
-    private fun fetchMovies() = viewModelScope.launch(dispatcher) {
+    fun fetchMovies() = viewModelScope.launch(dispatcher) {
         movies.emit(fetchPopularMovies())
     }
 

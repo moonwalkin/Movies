@@ -35,10 +35,10 @@ class PopularMovieFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.movieRecycler.layoutManager = LinearLayoutManager(context)
         binding.movieRecycler.adapter = adapter
+        viewModel.fetchMovies()
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.movies.collect {
                     adapter.submitList(it)
                 }
