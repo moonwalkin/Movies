@@ -2,6 +2,7 @@ package com.example.movies.data
 
 import com.example.movies.BuildConfig
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MovieService {
@@ -10,4 +11,10 @@ interface MovieService {
 
     @GET("now_playing")
     suspend fun fetchLatestMovies(@Query("api_key") api_key: String = BuildConfig.API_KEY): MoviesResponse
+
+    @GET("{movie_id}/videos")
+    suspend fun fetchTrailerById(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") api_key: String = BuildConfig.API_KEY
+    ): Trailer
 }

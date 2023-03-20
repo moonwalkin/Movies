@@ -2,6 +2,7 @@ package com.example.movies.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.movies.data.Trailer
 import com.example.movies.domain.FetchNowPlayingUseCase
 import com.example.movies.domain.FetchPopularMoviesUseCase
 import com.example.movies.domain.Movie
@@ -47,5 +48,13 @@ class MoviesViewModel @Inject constructor(
         it.sortedBy { movie ->
             movie.vote_average
         }.reversed()
+    }
+
+    fun fetchMovieTrailer(id: Int): String {
+        var key = ""
+        viewModelScope.launch(dispatcher) {
+            key = repository.fetchMovieTrailerById(id)
+        }
+        return key
     }
 }

@@ -19,4 +19,8 @@ class CloudDataSourceImpl @Inject constructor(private val movieService: MovieSer
             throw e
         }
     }
+
+    override suspend fun fetchMovieTrailerById(movieId: Int): Trailer {
+        return movieService.fetchTrailerById(movieId = movieId)
+    }
 }

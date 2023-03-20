@@ -77,4 +77,8 @@ class MovieRepositoryImpl @Inject constructor(
             movie.vote_count
         ))
     }
+
+    override suspend fun fetchMovieTrailerById(id: Int): String {
+        return cloudDataSource.fetchMovieTrailerById(id).results[1].key
+    }
 }

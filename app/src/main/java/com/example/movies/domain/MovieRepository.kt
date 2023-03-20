@@ -8,4 +8,5 @@ interface MovieRepository {
     suspend fun addMovieToFavorite(movie: Movie)
     suspend fun deleteMovieFromFavorite(movie: Movie)
     fun fetchFavoritesMovies(): Flow<List<Movie>>
+    suspend fun fetchMovieTrailerById(id: Int): String
 }

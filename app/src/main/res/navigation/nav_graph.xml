@@ -39,6 +39,14 @@
         android:id="@+id/movieDetailsFragment"
         android:name="com.example.movies.presentation.fragments.MovieDetailsFragment"
         android:label="MovieDetailsFragment"
-        tools:layout="@layout/fragment_movie_details"/>
+        tools:layout="@layout/fragment_movie_details">
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_trailerFragment"
+            app:destination="@id/trailerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trailerFragment"
+        android:name="com.example.movies.presentation.fragments.TrailerFragment"
+        android:label="TrailerFragment" />
 </navigation>
 
