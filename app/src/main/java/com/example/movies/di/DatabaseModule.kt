@@ -2,6 +2,7 @@ package com.example.movies.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.movies.data.database.MovieDao
 import com.example.movies.data.database.MovieDatabase
 import dagger.Module
 import dagger.Provides
@@ -22,5 +23,11 @@ class DatabaseModule {
             MovieDatabase::class.java,
             "favorite_movies"
         ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideDao(database: MovieDatabase): MovieDao {
+        return database.movieDao()
     }
 }

@@ -9,7 +9,6 @@ data class MovieDto(
     val adult: Boolean,
     val backdrop_path: String,
 //    val genre_ids: List<Int>,
-    val budget: Int,
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val original_language: String,
