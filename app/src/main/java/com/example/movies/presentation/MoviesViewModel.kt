@@ -1,10 +1,10 @@
 package com.example.movies.presentation
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movies.data.Movie
-import com.example.movies.domain.FetchPopularMovies
+import com.example.movies.domain.FetchNowPlayingUseCase
+import com.example.movies.domain.FetchPopularMoviesUseCase
+import com.example.movies.domain.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -14,14 +14,20 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MoviesViewModel @Inject constructor(
-    private val fetchPopularMovies: FetchPopularMovies,
+    private val fetchPopularMovies: FetchPopularMoviesUseCase,
+    private val fetchLatestMoviesUseCase: FetchNowPlayingUseCase,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Main
 ) : ViewModel() {
 
-    val movies = MutableSharedFlow<List<Movie>>()
+    val popularMovies = MutableSharedFlow<List<Movie>>()
+    val nowPlayingMovies = MutableSharedFlow<List<Movie>>()
 
-    fun fetchMovies() = viewModelScope.launch(dispatcher) {
-        movies.emit(fetchPopularMovies())
+    fun fetchPopularMovies() = viewModelScope.launch(dispatcher) {
+        popularMovies.emit(fetchPopularMovies.invoke())
+    }
+
+    fun fetchNowPlayingMovies() = viewModelScope.launch(dispatcher) {
+        nowPlayingMovies.emit(fetchLatestMoviesUseCase.invoke())
     }
 
 }

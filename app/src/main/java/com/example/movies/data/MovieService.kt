@@ -7,4 +7,7 @@ import retrofit2.http.Query
 interface MovieService {
     @GET("popular")
     suspend fun fetchPopularMovies(@Query("api_key") api_key: String = BuildConfig.API_KEY): MoviesResponse
+
+    @GET("now_playing")
+    suspend fun fetchLatestMovies(@Query("api_key") api_key: String = BuildConfig.API_KEY): MoviesResponse
 }
