@@ -1,38 +1,32 @@
 package com.example.movies.data
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.example.movies.domain.Movie
 
+@Entity(tableName = "favorite_movies")
 data class MovieDto(
     val adult: Boolean,
     val backdrop_path: String,
-    val belongsToCollection: Any?,
-    val genre_ids: List<Int>,
-    val budget: Int?,
+//    val genre_ids: List<Int>,
+    val budget: Int,
+    @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val homepage: String?,
     val original_language: String,
     val original_title: String,
-    val imdbId: String?,
     val overview: String,
     val popularity: Double,
     val poster_path: String,
     val release_date: String,
-    val productionCompanies: List<Any>?,
-    val productionCountries: List<Any>?,
     val title: String,
     val video: Boolean,
     val vote_average: Double,
-    val status: String?,
     val vote_count: Int,
-    val revenue: Int?,
-    val runtime: Int?,
-    val spokenLanguages: List<Any>?,
-    val tagline: String?
 ) {
     fun map() = Movie(
         adult,
         backdrop_path,
-        genre_ids,
+        listOf(),
         id,
         original_language,
         original_title,
