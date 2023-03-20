@@ -1,4 +1,4 @@
-package com.example.movies.presentation
+package com.example.movies.presentation.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,37 +9,38 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.movies.databinding.FragmentPopularMoviesBinding
+import com.example.movies.databinding.FragmentNowPlayingMoviesBinding
+import com.example.movies.presentation.MovieAdapter
+import com.example.movies.presentation.MoviesViewModel
+import com.example.movies.presentation.navigate
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class PopularMovieFragment : Fragment() {
-    private var _binding: FragmentPopularMoviesBinding? = null
-    private val binding: FragmentPopularMoviesBinding
-        get() = checkNotNull(_binding) { "Fragment equal null" }
-
+class NowPlayingMoviesFragment : Fragment() {
+    private var _binding: FragmentNowPlayingMoviesBinding? = null
+    private val binding: FragmentNowPlayingMoviesBinding get() = checkNotNull(_binding)
     private val viewModel: MoviesViewModel by viewModels()
-
-    private val adapter = MovieAdapter()
+    private val adapter = MovieAdapter {
+        navigate().showMovieDetails(it)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPopularMoviesBinding.inflate(layoutInflater)
+        _binding = FragmentNowPlayingMoviesBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.movieRecycler.adapter = adapter
-        viewModel.fetchMovies()
+        viewModel.fetchNowPlayingMovies()
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.movies.collect {
+                viewModel.nowPlayingMovies.collect {
                     adapter.submitList(it)
                 }
             }

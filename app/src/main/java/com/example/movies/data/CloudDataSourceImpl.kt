@@ -11,4 +11,12 @@ class CloudDataSourceImpl @Inject constructor(private val movieService: MovieSer
             throw e
         }
     }
+
+    override suspend fun fetchNowPlayingMovies(): MoviesResponse {
+        return try {
+            movieService.fetchLatestMovies()
+        } catch (e: Exception) {
+            throw e
+        }
+    }
 }

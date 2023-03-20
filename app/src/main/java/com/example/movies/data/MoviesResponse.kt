@@ -6,7 +6,7 @@ data class MoviesResponse(
     @field:Json(name = "page")
     val page: Int,
     @field:Json(name = "results")
-    val movies: List<Movie>,
+    val movies: List<MovieDto>,
     @field:Json(name = "total_pages")
     val totalPages: Int,
     @field:Json(name = "total_results")
