@@ -22,7 +22,7 @@ class NowPlayingMoviesFragment : Fragment() {
     private val binding: FragmentNowPlayingMoviesBinding get() = checkNotNull(_binding)
     private val viewModel: MoviesViewModel by viewModels()
     private val adapter = MovieAdapter {
-        navigate().showMovieDetails(it)
+        viewModel.addToFavorite(it)
     }
 
     override fun onCreateView(

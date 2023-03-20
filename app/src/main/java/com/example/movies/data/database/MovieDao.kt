@@ -1,9 +1,6 @@
 package com.example.movies.data.database
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.example.movies.data.MovieDto
 import kotlinx.coroutines.flow.Flow
 
@@ -12,7 +9,7 @@ interface MovieDao {
     @Query("SELECT * from favorite_movies")
     fun fetchFavoriteMovies(): Flow<List<MovieDto>>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addMovie(movieDto: MovieDto)
 
     @Delete

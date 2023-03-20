@@ -48,6 +48,7 @@ class PopularMoviesFragment : Fragment() {
                 }
             }
         }
+
     }
 
     override fun onDestroyView() {
