@@ -1,6 +1,11 @@
 package com.example.movies.di
 
 import com.example.movies.data.*
+import com.example.movies.data.repository.MovieRepositoryImpl
+import com.example.movies.data.sources.local.LocalDataSource
+import com.example.movies.data.sources.local.LocalDataSourceImpl
+import com.example.movies.data.sources.remote.CloudDataSource
+import com.example.movies.data.sources.remote.CloudDataSourceImpl
 import com.example.movies.domain.MovieRepository
 import dagger.Binds
 import dagger.Module

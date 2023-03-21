@@ -1,4 +1,4 @@
-package com.example.movies.presentation
+package com.example.movies.presentation.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
