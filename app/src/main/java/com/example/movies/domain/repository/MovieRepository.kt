@@ -1,7 +1,6 @@
-package com.example.movies.domain
+package com.example.movies.domain.repository
 
-import com.example.movies.data.Cast
-import com.example.movies.data.CastResponse
+import com.example.movies.domain.Movie
 import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
@@ -11,6 +10,4 @@ interface MovieRepository {
     suspend fun deleteMovieFromFavorite(movie: Movie)
     fun fetchFavoritesMovies(): Flow<List<Movie>>
     suspend fun fetchMovieTrailerById(id: Int): String
-
-    suspend fun fetchActorsCast(id: Int): List<Cast>
 }

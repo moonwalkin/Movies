@@ -28,13 +28,10 @@ class PopularMoviesFragment : BaseFragment<FragmentPopularMoviesBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding.movieRecycler.adapter = adapter
         viewModel.fetchPopularMovies()
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.popularMovies.collect {
-                    adapter.submitList(it)
-                }
+        observe {
+            viewModel.popularMovies.collect {
+                adapter.submitList(it)
             }
         }
-
     }
 }

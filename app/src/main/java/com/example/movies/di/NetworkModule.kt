@@ -1,5 +1,6 @@
 package com.example.movies.di
 
+import com.example.movies.data.network.AuthInterceptor
 import com.example.movies.data.network.MovieService
 import dagger.Module
 import dagger.Provides
@@ -20,9 +21,7 @@ class NetworkModule {
     @Singleton
     fun provideOkhttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                HttpLoggingInterceptor.Level.BODY
-            })
+            .addInterceptor(AuthInterceptor())
             .build()
     }
 

@@ -5,16 +5,15 @@ import com.example.movies.data.MovieDto
 import com.example.movies.data.sources.local.LocalDataSource
 import com.example.movies.data.sources.remote.CloudDataSource
 import com.example.movies.domain.Movie
-import com.example.movies.domain.MovieRepository
+import com.example.movies.domain.repository.CommonRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class MovieRepositoryImpl @Inject constructor(
+class CommonRepositoryImpl @Inject constructor(
     private val cloudDataSource: CloudDataSource,
     private val localDataSource: LocalDataSource
-) :
-    MovieRepository {
+) : CommonRepository {
     override suspend fun fetchPopularMovies(): List<Movie> {
         return try {
             cloudDataSource.fetchPopularMovies().movies.map {
@@ -36,10 +35,14 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override fun fetchFavoritesMovies(): Flow<List<Movie>> {
-        return localDataSource.fetchFavoriteMovies().map { movies ->
-            movies.map {
-                it.map()
+        return try {
+            localDataSource.fetchFavoriteMovies().map { movies ->
+                movies.map {
+                    it.map()
+                }
             }
+        } catch (e: Exception) {
+            throw e
         }
     }
 
@@ -47,18 +50,12 @@ class MovieRepositoryImpl @Inject constructor(
         localDataSource.addMovie(
             MovieDto(
                 movie.adult,
-                movie.backdrop_path,
                 movie.id,
-                movie.original_language,
-                movie.original_title,
                 movie.overview,
-                movie.popularity,
-                movie.poster_path,
-                movie.release_date,
+                movie.posterPath,
+                movie.releaseDate,
                 movie.title,
-                movie.video,
-                movie.vote_average,
-                movie.vote_count
+                movie.voteAverage
             )
         )
     }
@@ -67,27 +64,29 @@ class MovieRepositoryImpl @Inject constructor(
         localDataSource.deleteMovie(
             MovieDto(
                 movie.adult,
-                movie.backdrop_path,
                 movie.id,
-                movie.original_language,
-                movie.original_title,
                 movie.overview,
-                movie.popularity,
-                movie.poster_path,
-                movie.release_date,
+                movie.posterPath,
+                movie.releaseDate,
                 movie.title,
-                movie.video,
-                movie.vote_average,
-                movie.vote_count
+                movie.voteAverage
             )
         )
     }
 
     override suspend fun fetchMovieTrailerById(id: Int): String {
-        return cloudDataSource.fetchMovieTrailerById(id).results[1].key
+        return try {
+            cloudDataSource.fetchMovieTrailerById(id).results[1].key
+        } catch (e: Exception) {
+            throw e
+        }
     }
 
     override suspend fun fetchActorsCast(id: Int): List<Cast> {
-        return cloudDataSource.fetchActorsCast(id).cast
+        return try {
+            cloudDataSource.fetchActorsCast(id).cast
+        } catch (e: Exception) {
+            throw e
+        }
     }
 }

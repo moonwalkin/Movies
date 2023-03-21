@@ -27,11 +27,9 @@ class NowPlayingMoviesFragment : BaseFragment<FragmentNowPlayingMoviesBinding>()
         super.onViewCreated(view, savedInstanceState)
         binding.movieRecycler.adapter = adapter
         viewModel.fetchNowPlayingMovies()
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.nowPlayingMovies.collect {
-                    adapter.submitList(it)
-                }
+        observe {
+            viewModel.nowPlayingMovies.collect {
+                adapter.submitList(it)
             }
         }
     }

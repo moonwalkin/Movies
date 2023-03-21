@@ -41,12 +41,21 @@
         android:label="MovieDetailsFragment"
         tools:layout="@layout/fragment_movie_details">
         <action
-            android:id="@+id/action_movieDetailsFragment_to_trailerFragment"
+            android:id="@+id/fromMovieDetailsToTrailer"
             app:destination="@id/trailerFragment" />
+        <action
+            android:id="@+id/fromMovieDetailsToActorDetails"
+            app:destination="@id/actorDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/trailerFragment"
         android:name="com.example.movies.presentation.fragments.TrailerFragment"
-        android:label="TrailerFragment" />
+        android:label="TrailerFragment"
+        tools:layout="@layout/fragment_trailer"/>
+    <fragment
+        android:id="@+id/actorDetailsFragment"
+        android:name="com.example.movies.presentation.fragments.ActorDetailsFragment"
+        android:label="ActorDetailsFragment"
+        tools:layout="@layout/fragment_actor_details"/>
 </navigation>
 
