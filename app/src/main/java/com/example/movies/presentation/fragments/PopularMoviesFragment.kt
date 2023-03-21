@@ -3,22 +3,18 @@ package com.example.movies.presentation.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.example.movies.databinding.FragmentPopularMoviesBinding
 import com.example.movies.presentation.adapter.MovieAdapter
-import com.example.movies.presentation.MoviesViewModel
 import com.example.movies.presentation.navigate
+import com.example.movies.presentation.viewmodels.PopularMoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class PopularMoviesFragment : BaseFragment<FragmentPopularMoviesBinding>() {
 
     override fun receiveView() = FragmentPopularMoviesBinding.inflate(layoutInflater)
 
-    private val viewModel: MoviesViewModel by viewModels()
+    private val viewModel: PopularMoviesViewModel by viewModels()
 
     private val adapter = MovieAdapter { movie ->
         navigate().showMovieDetails(movie)
@@ -29,7 +25,7 @@ class PopularMoviesFragment : BaseFragment<FragmentPopularMoviesBinding>() {
         binding.movieRecycler.adapter = adapter
         viewModel.fetchPopularMovies()
         observe {
-            viewModel.popularMovies.collect {
+            viewModel.items.collect {
                 adapter.submitList(it)
             }
         }

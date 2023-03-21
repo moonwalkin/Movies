@@ -21,7 +21,7 @@ data class MovieDto(
     @field:Json(name = "title")
     val title: String,
     @field:Json(name = "vote_average")
-    val voteAverage: Double
+    val voteAverage: Double,
 ) {
     fun map() = Movie(
         adult,
