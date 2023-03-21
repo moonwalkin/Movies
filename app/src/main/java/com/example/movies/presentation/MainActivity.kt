@@ -8,6 +8,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.movies.R
 import com.example.movies.databinding.ActivityMainBinding
 import com.example.movies.domain.Movie
+import com.example.movies.presentation.fragments.ActorDetailsFragment
 import com.example.movies.presentation.fragments.MovieDetailsFragment
 import com.example.movies.presentation.fragments.TrailerFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,8 +38,12 @@ class MainActivity : AppCompatActivity(), Navigator {
         navController.popBackStack()
     }
 
+    override fun showActorDetails(id: Int) {
+        launch(R.id.fromMovieDetailsToActorDetails, ActorDetailsFragment.createArgs(id))
+    }
+
     override fun showTrailer(id: Int) {
-        launch(R.id.action_movieDetailsFragment_to_trailerFragment, TrailerFragment.createArgs(id))
+        launch(R.id.fromMovieDetailsToTrailer, TrailerFragment.createArgs(id))
     }
 
     private fun launch(destination: Int, args: Bundle? = null) {

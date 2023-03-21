@@ -1,12 +1,12 @@
 package com.example.movies.di
 
 import com.example.movies.data.*
-import com.example.movies.data.repository.MovieRepositoryImpl
+import com.example.movies.data.repository.CommonRepositoryImpl
 import com.example.movies.data.sources.local.LocalDataSource
 import com.example.movies.data.sources.local.LocalDataSourceImpl
 import com.example.movies.data.sources.remote.CloudDataSource
 import com.example.movies.data.sources.remote.CloudDataSourceImpl
-import com.example.movies.domain.MovieRepository
+import com.example.movies.domain.repository.CommonRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -27,5 +27,5 @@ interface SourcesModule {
 
     @Binds
     @Singleton
-    fun bindRepository(moviesRepository: MovieRepositoryImpl): MovieRepository
+    fun bindRepository(moviesRepository: CommonRepositoryImpl): CommonRepository
 }

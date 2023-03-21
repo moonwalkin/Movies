@@ -3,10 +3,10 @@ package com.example.movies.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movies.data.Cast
-import com.example.movies.domain.FetchNowPlayingUseCase
-import com.example.movies.domain.FetchPopularMoviesUseCase
 import com.example.movies.domain.Movie
-import com.example.movies.domain.MovieRepository
+import com.example.movies.domain.repository.CommonRepository
+import com.example.movies.domain.usecases.FetchNowPlayingUseCase
+import com.example.movies.domain.usecases.FetchPopularMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -20,13 +20,14 @@ class MoviesViewModel @Inject constructor(
     private val fetchPopularMovies: FetchPopularMoviesUseCase,
     private val fetchLatestMoviesUseCase: FetchNowPlayingUseCase,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Main,
-    private val repository: MovieRepository
+    private val repository: CommonRepository
 ) : ViewModel() {
 
     val popularMovies = MutableSharedFlow<List<Movie>>()
     val nowPlayingMovies = MutableSharedFlow<List<Movie>>()
     val favoriteMovies = MutableSharedFlow<List<Movie>>()
     val actors = MutableSharedFlow<List<Cast>>()
+    val trailerId = MutableSharedFlow<String>()
 
     fun fetchPopularMovies() = viewModelScope.launch(dispatcher) {
         popularMovies.emit(fetchPopularMovies.invoke())
@@ -46,16 +47,14 @@ class MoviesViewModel @Inject constructor(
 
     fun fetchFavoriteMovies() = repository.fetchFavoritesMovies().map {
         it.sortedBy { movie ->
-            movie.vote_average
+            movie.voteAverage
         }.reversed()
     }
 
-    fun fetchMovieTrailer(id: Int): String {
-        var key = ""
+    fun fetchMovieTrailer(id: Int) {
         viewModelScope.launch(dispatcher) {
-            key = repository.fetchMovieTrailerById(id)
+            trailerId.emit(repository.fetchMovieTrailerById(id))
         }
-        return key
     }
 
     fun fetchActorsCast(id: Int) = viewModelScope.launch(dispatcher) {

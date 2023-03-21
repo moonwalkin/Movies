@@ -26,11 +26,9 @@ class FavoriteMoviesFragment : BaseFragment<FragmentFavoriteMoviesBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.movieRecycler.adapter = adapter
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.fetchFavoriteMovies().collect {
-                    adapter.submitList(it)
-                }
+        observe {
+            viewModel.fetchFavoriteMovies().collect {
+                adapter.submitList(it)
             }
         }
     }

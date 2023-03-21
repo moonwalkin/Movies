@@ -5,7 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewbinding.ViewBinding
+import kotlinx.coroutines.launch
 
 abstract class BaseFragment<T : ViewBinding> : Fragment() {
     private var _binding: T? = null
@@ -27,4 +31,11 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
         super.onDestroyView()
     }
 
+    protected fun observe(body: suspend () -> Unit) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                body()
+            }
+        }
+    }
 }
