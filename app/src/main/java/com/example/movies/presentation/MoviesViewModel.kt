@@ -2,7 +2,7 @@ package com.example.movies.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movies.data.Trailer
+import com.example.movies.data.Cast
 import com.example.movies.domain.FetchNowPlayingUseCase
 import com.example.movies.domain.FetchPopularMoviesUseCase
 import com.example.movies.domain.Movie
@@ -11,7 +11,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,6 +26,7 @@ class MoviesViewModel @Inject constructor(
     val popularMovies = MutableSharedFlow<List<Movie>>()
     val nowPlayingMovies = MutableSharedFlow<List<Movie>>()
     val favoriteMovies = MutableSharedFlow<List<Movie>>()
+    val actors = MutableSharedFlow<List<Cast>>()
 
     fun fetchPopularMovies() = viewModelScope.launch(dispatcher) {
         popularMovies.emit(fetchPopularMovies.invoke())
@@ -56,5 +56,9 @@ class MoviesViewModel @Inject constructor(
             key = repository.fetchMovieTrailerById(id)
         }
         return key
+    }
+
+    fun fetchActorsCast(id: Int) = viewModelScope.launch(dispatcher) {
+        actors.emit(repository.fetchActorsCast(id))
     }
 }

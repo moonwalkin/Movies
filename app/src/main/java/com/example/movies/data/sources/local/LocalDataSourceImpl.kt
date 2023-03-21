@@ -1,5 +1,6 @@
-package com.example.movies.data
+package com.example.movies.data.sources.local
 
+import com.example.movies.data.MovieDto
 import com.example.movies.data.database.MovieDao
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
