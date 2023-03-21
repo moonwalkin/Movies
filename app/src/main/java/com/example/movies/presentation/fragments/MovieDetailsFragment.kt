@@ -22,10 +22,10 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val movie: Movie = requireArguments().getSerializable(MOVIE_DETAILS) as Movie
+        val movie = requireArguments().getSerializable(MOVIE_DETAILS) as Movie
         viewModel.fetchActorsCast(movie.id)
         observe {
-            viewModel.actors.collect {
+            viewModel.items.collect {
                 adapter.submitList(it)
             }
         }
