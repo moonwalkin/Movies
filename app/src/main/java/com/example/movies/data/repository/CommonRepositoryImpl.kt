@@ -23,8 +23,8 @@ class CommonRepositoryImpl @Inject constructor(
     var page = 1
 
     override suspend fun fetchPopularMovies(): State<List<Movie>> {
-        val response = cloudDataSource.fetchPopularMovies(1)
         return try {
+            val response = cloudDataSource.fetchPopularMovies(1)
             if (page < response.totalPages) {
                 listOfPopularMovies.addAll(cloudDataSource.fetchPopularMovies(page).movies.map {
                     mapper.mapToDomain(it)
