@@ -23,7 +23,6 @@ class PopularMoviesFragment : BaseFragment<FragmentPopularMoviesBinding>() {
     private val movieAdapter = MovieAdapter { movie ->
         navigate().showMovieDetails(movie)
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val layoutManager = GridLayoutManager(context, 2)

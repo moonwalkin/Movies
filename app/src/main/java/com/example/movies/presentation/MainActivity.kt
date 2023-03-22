@@ -5,14 +5,13 @@ import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.example.movies.R
 import com.example.movies.databinding.ActivityMainBinding
 import com.example.movies.domain.entity.Movie
-import com.example.movies.presentation.fragments.MovieDetailsFragment
 import com.example.movies.presentation.fragments.MovieDetailsFragmentDirections
 import com.example.movies.presentation.fragments.NowPlayingMoviesFragmentDirections
-import com.example.movies.presentation.fragments.TrailerFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,6 +28,7 @@ class MainActivity : AppCompatActivity(), Navigator {
         val binding = ActivityMainBinding.inflate(layoutInflater).also {
             setContentView(it.root)
         }
+        NavigationUI.setupActionBarWithNavController(this, navController)
         binding.bottomNavigation.setupWithNavController(navController)
     }
 
@@ -42,6 +42,10 @@ class MainActivity : AppCompatActivity(), Navigator {
 
     override fun showTrailer(id: Int) {
         launch(MovieDetailsFragmentDirections.fromMovieDetailsToTrailer(id))
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
     private fun launch(directions: NavDirections) {

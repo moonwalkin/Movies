@@ -21,7 +21,7 @@
     <fragment
         android:id="@+id/nowPlayingMoviesFragment"
         android:name="com.example.movies.presentation.fragments.NowPlayingMoviesFragment"
-        android:label="List"
+        android:label="Latest"
         tools:layout="@layout/fragment_now_playing_movies">
         <action
             android:id="@id/fromMovieToDetails"
@@ -47,7 +47,7 @@
     <fragment
         android:id="@+id/movieDetailsFragment"
         android:name="com.example.movies.presentation.fragments.MovieDetailsFragment"
-        android:label="MovieDetailsFragment"
+        android:label="Details"
         tools:layout="@layout/fragment_movie_details">
         <action
             android:id="@+id/fromMovieDetailsToTrailer"
@@ -59,7 +59,7 @@
     <fragment
         android:id="@+id/trailerFragment"
         android:name="com.example.movies.presentation.fragments.TrailerFragment"
-        android:label="TrailerFragment"
+        android:label="Trailer"
         tools:layout="@layout/fragment_trailer">
         <argument
             android:name="trailerId"
