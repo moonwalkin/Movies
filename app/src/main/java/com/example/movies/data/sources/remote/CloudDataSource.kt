@@ -5,7 +5,7 @@ import com.example.movies.data.models.MoviesResponse
 import com.example.movies.data.models.TrailerResponse
 
 interface CloudDataSource {
-    suspend fun fetchPopularMovies(): MoviesResponse
+    suspend fun fetchPopularMovies(page: Int): MoviesResponse
     suspend fun fetchNowPlayingMovies(): MoviesResponse
     suspend fun fetchMovieTrailerById(movieId: Int): TrailerResponse
     suspend fun fetchActorsCast(movieId: Int): CastResponse
