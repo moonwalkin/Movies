@@ -5,26 +5,28 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.movies.R
 import com.example.movies.databinding.FragmentMovieDetailsBinding
 import com.example.movies.databinding.LayoutResultBinding
 import com.example.movies.domain.entity.Movie
+import com.example.movies.presentation.viewmodels.MoviesViewModel
 import com.example.movies.presentation.adapter.ActorCastAdapter
 import com.example.movies.presentation.navigate
-import com.example.movies.presentation.viewmodels.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>() {
 
+    private val args by navArgs<MovieDetailsFragmentArgs>()
     private val viewModel: MoviesViewModel by viewModels()
     private val adapter = ActorCastAdapter()
     override fun receiveView() = FragmentMovieDetailsBinding.inflate(layoutInflater)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val movie = requireArguments().getSerializable(MOVIE_DETAILS) as Movie
+        val movie = args.movie
         viewModel.fetchActorsCast(movie.id)
         observe()
         initViews(movie)
@@ -42,11 +44,11 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>() {
                         adapter.submitList(it)
                     },
                     onError = {
-                        resultBinding.errorContainer.isVisible = true
+                        resultBinding.errorContainer.visibility = View.VISIBLE
                         resultBinding.tvErrorMessage.text = it
                     },
                     onLoading = {
-                        resultBinding.progressBar.isVisible = true
+                        resultBinding.progressBar.visibility = View.VISIBLE
                     }
                 )
             }

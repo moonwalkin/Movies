@@ -9,30 +9,39 @@
         android:id="@+id/popularMoviesFragment"
         android:name="com.example.movies.presentation.fragments.PopularMoviesFragment"
         android:label="Popular"
-        tools:layout="@layout/fragment_popular_movies" >
+        tools:layout="@layout/fragment_popular_movies">
         <action
             android:id="@+id/fromMovieToDetails"
             app:destination="@id/movieDetailsFragment" />
+        <deepLink
+            app:action="android.intent.action.VIEW"
+            app:uri="https://movieapp.com/populars" />
     </fragment>
 
     <fragment
         android:id="@+id/nowPlayingMoviesFragment"
         android:name="com.example.movies.presentation.fragments.NowPlayingMoviesFragment"
         android:label="List"
-        tools:layout="@layout/fragment_now_playing_movies" >
+        tools:layout="@layout/fragment_now_playing_movies">
         <action
             android:id="@id/fromMovieToDetails"
             app:destination="@id/movieDetailsFragment" />
+        <deepLink
+            app:action="android.intent.action.VIEW"
+            app:uri="https://movieapp.com/latest" />
     </fragment>
 
     <fragment
         android:id="@+id/favoriteMoviesFragment"
         android:name="com.example.movies.presentation.fragments.FavoriteMoviesFragment"
         android:label="Favorite"
-        tools:layout="@layout/fragment_favorite_movies" >
+        tools:layout="@layout/fragment_favorite_movies">
         <action
             android:id="@id/fromMovieToDetails"
             app:destination="@id/movieDetailsFragment" />
+        <deepLink
+            app:action="android.intent.action.VIEW"
+            app:uri="https://movieapp.com/favorites" />
     </fragment>
 
     <fragment
@@ -43,19 +52,20 @@
         <action
             android:id="@+id/fromMovieDetailsToTrailer"
             app:destination="@id/trailerFragment" />
-        <action
-            android:id="@+id/fromMovieDetailsToActorDetails"
-            app:destination="@id/actorDetailsFragment" />
+        <argument
+            android:name="movie"
+            app:argType="com.example.movies.domain.entity.Movie" />
     </fragment>
     <fragment
         android:id="@+id/trailerFragment"
         android:name="com.example.movies.presentation.fragments.TrailerFragment"
         android:label="TrailerFragment"
-        tools:layout="@layout/fragment_trailer"/>
-    <fragment
-        android:id="@+id/actorDetailsFragment"
-        android:name="com.example.movies.presentation.fragments.ActorDetailsFragment"
-        android:label="ActorDetailsFragment"
-        tools:layout="@layout/fragment_actor_details"/>
+        tools:layout="@layout/fragment_trailer">
+        <argument
+            android:name="trailerId"
+            app:argType="integer" />
+    </fragment>
+
+
 </navigation>
 
