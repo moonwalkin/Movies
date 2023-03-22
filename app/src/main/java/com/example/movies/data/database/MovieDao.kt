@@ -1,7 +1,7 @@
 package com.example.movies.data.database
 
 import androidx.room.*
-import com.example.movies.data.MovieDto
+import com.example.movies.data.models.MovieDto
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -15,3 +15,4 @@ interface MovieDao {
     @Delete
     suspend fun deleteMovie(movieDto: MovieDto)
 }
+

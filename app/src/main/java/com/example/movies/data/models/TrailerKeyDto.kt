@@ -1,9 +1,9 @@
-package com.example.movies.data
+package com.example.movies.data.models
 
 
 import com.squareup.moshi.Json
 
-data class TrailerKey(
+data class TrailerKeyDto(
     @Json(name = "key")
     val key: String,
 )

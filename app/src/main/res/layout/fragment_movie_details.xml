@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/some_background_image">
 
+    <include layout="@layout/layout_result"/>
+
     <ImageView
         android:id="@id/ivPoster"
         android:layout_width="180dp"

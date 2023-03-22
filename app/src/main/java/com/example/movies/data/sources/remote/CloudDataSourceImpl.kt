@@ -1,9 +1,9 @@
 package com.example.movies.data.sources.remote
 
-import com.example.movies.data.CastResponse
+import com.example.movies.data.models.CastResponse
 import com.example.movies.data.network.MovieService
-import com.example.movies.data.MoviesResponse
-import com.example.movies.data.Trailer
+import com.example.movies.data.models.MoviesResponse
+import com.example.movies.data.models.TrailerResponse
 import javax.inject.Inject
 
 class CloudDataSourceImpl @Inject constructor(private val movieService: MovieService) :
@@ -24,7 +24,7 @@ class CloudDataSourceImpl @Inject constructor(private val movieService: MovieSer
         }
     }
 
-    override suspend fun fetchMovieTrailerById(movieId: Int): Trailer {
+    override suspend fun fetchMovieTrailerById(movieId: Int): TrailerResponse {
         return movieService.fetchTrailerById(movieId = movieId)
     }
 

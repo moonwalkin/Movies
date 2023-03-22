@@ -2,7 +2,7 @@ package com.example.movies.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.movies.data.MovieDto
+import com.example.movies.data.models.MovieDto
 
 @Database(
     entities = [

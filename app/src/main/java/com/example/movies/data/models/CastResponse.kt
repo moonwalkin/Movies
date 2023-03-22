@@ -1,9 +1,9 @@
-package com.example.movies.data
+package com.example.movies.data.models
 
 
 import com.squareup.moshi.Json
 
 data class CastResponse(
     @Json(name = "cast")
-    val cast: List<Cast>,
+    val cast: List<CastDto>,
 )
