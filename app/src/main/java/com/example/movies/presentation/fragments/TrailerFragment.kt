@@ -7,6 +7,7 @@ import android.webkit.WebView
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.example.movies.databinding.FragmentTrailerBinding
 import com.example.movies.databinding.LayoutResultBinding
 import com.example.movies.presentation.viewmodels.MoviesViewModel
@@ -17,12 +18,13 @@ class TrailerFragment : BaseFragment<FragmentTrailerBinding>() {
 
     override fun receiveView() = FragmentTrailerBinding.inflate(layoutInflater)
 
+    private val args by navArgs<TrailerFragmentArgs>()
+
     private val viewModel: MoviesViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val id = requireArguments().getInt(MOVIE_ID)
-        viewModel.fetchMovieTrailer(id)
+        viewModel.fetchMovieTrailer(args.trailerId)
         binding.webView.apply {
             webChromeClient = WebChromeClient()
             observe(this)
@@ -49,11 +51,5 @@ class TrailerFragment : BaseFragment<FragmentTrailerBinding>() {
                 )
             }
         }
-    }
-
-    companion object {
-        private const val MOVIE_ID = "id"
-
-        fun createArgs(id: Int) = bundleOf(MOVIE_ID to id)
     }
 }

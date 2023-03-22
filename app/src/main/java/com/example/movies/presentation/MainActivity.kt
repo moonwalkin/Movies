@@ -3,12 +3,15 @@ package com.example.movies.presentation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.movies.R
 import com.example.movies.databinding.ActivityMainBinding
 import com.example.movies.domain.entity.Movie
 import com.example.movies.presentation.fragments.MovieDetailsFragment
+import com.example.movies.presentation.fragments.MovieDetailsFragmentDirections
+import com.example.movies.presentation.fragments.NowPlayingMoviesFragmentDirections
 import com.example.movies.presentation.fragments.TrailerFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,7 +33,7 @@ class MainActivity : AppCompatActivity(), Navigator {
     }
 
     override fun showMovieDetails(movie: Movie) {
-        launch(R.id.fromMovieToDetails, MovieDetailsFragment.createArgs(movie))
+        launch(NowPlayingMoviesFragmentDirections.fromMovieToDetails(movie))
     }
 
     override fun close() {
@@ -38,11 +41,11 @@ class MainActivity : AppCompatActivity(), Navigator {
     }
 
     override fun showTrailer(id: Int) {
-        launch(R.id.fromMovieDetailsToTrailer, TrailerFragment.createArgs(id))
+        launch(MovieDetailsFragmentDirections.fromMovieDetailsToTrailer(id))
     }
 
-    private fun launch(destination: Int, args: Bundle? = null) {
-        navController.navigate(destination, args)
+    private fun launch(directions: NavDirections) {
+        navController.navigate(directions)
     }
 }
 

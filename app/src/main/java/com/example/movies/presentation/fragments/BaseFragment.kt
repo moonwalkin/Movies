@@ -35,7 +35,7 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
 
     protected fun observe(body: suspend () -> Unit) {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 body()
             }
         }
