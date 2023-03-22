@@ -8,15 +8,15 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MovieService {
-    @GET("movie/popular")
+    @GET("popular")
     suspend fun fetchPopularMovies(@Query("page") page: Int): MoviesResponse
 
-    @GET("movie/now_playing")
+    @GET("now_playing")
     suspend fun fetchLatestMovies(): MoviesResponse
 
-    @GET("movie/{movie_id}/videos")
+    @GET("{movie_id}/videos")
     suspend fun fetchTrailerById(@Path("movie_id") movieId: Int): TrailerResponse
 
-    @GET("movie/{movie_id}/credits")
+    @GET("{movie_id}/credits")
     suspend fun fetchActorsCast(@Path("movie_id") movieId: Int): CastResponse
 }
