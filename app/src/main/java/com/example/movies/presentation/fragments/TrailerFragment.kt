@@ -1,21 +1,16 @@
 package com.example.movies.presentation.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.webkit.WebChromeClient
-import androidx.activity.OnBackPressedCallback
+import android.webkit.WebView
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.example.movies.databinding.FragmentTrailerBinding
-import com.example.movies.presentation.MoviesViewModel
-import com.example.movies.presentation.navigate
+import com.example.movies.databinding.LayoutResultBinding
+import com.example.movies.presentation.viewmodels.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TrailerFragment : BaseFragment<FragmentTrailerBinding>() {
@@ -30,21 +25,31 @@ class TrailerFragment : BaseFragment<FragmentTrailerBinding>() {
         viewModel.fetchMovieTrailer(id)
         binding.webView.apply {
             webChromeClient = WebChromeClient()
-            observe {
-                viewModel.trailerId.collect {
-                    loadUrl("https://www.youtube.com/watch?v=$it")
-                }
-            }
-        }
-
-        object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                navigate().close()
-            }
+            observe(this)
         }
     }
 
-
+    private fun observe(webView: WebView) {
+        val resultBinding = LayoutResultBinding.bind(binding.root)
+        observe {
+            viewModel.trailerId.collect { state ->
+                renderState(
+                    root = binding.root,
+                    state = state,
+                    onSuccess = {
+                        webView.loadUrl("https://www.youtube.com/watch?v=$it")
+                    },
+                    onError = {
+                        resultBinding.errorContainer.isVisible = true
+                        resultBinding.tvErrorMessage.text = it
+                    },
+                    onLoading = {
+                        resultBinding.progressBar.isVisible = true
+                    }
+                )
+            }
+        }
+    }
 
     companion object {
         private const val MOVIE_ID = "id"

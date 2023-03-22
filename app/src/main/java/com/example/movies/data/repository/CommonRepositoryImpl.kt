@@ -1,92 +1,89 @@
 package com.example.movies.data.repository
 
-import com.example.movies.data.Cast
-import com.example.movies.data.MovieDto
+import com.example.movies.data.mapper.Mapper
+import com.example.movies.data.models.MovieDto
 import com.example.movies.data.sources.local.LocalDataSource
 import com.example.movies.data.sources.remote.CloudDataSource
-import com.example.movies.domain.Movie
+import com.example.movies.domain.State
+import com.example.movies.domain.entity.Cast
+import com.example.movies.domain.entity.Movie
 import com.example.movies.domain.repository.CommonRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class CommonRepositoryImpl @Inject constructor(
     private val cloudDataSource: CloudDataSource,
-    private val localDataSource: LocalDataSource
+    private val localDataSource: LocalDataSource,
+    private val mapper: Mapper<MovieDto, Movie>
 ) : CommonRepository {
-    override suspend fun fetchPopularMovies(): List<Movie> {
+    override suspend fun fetchPopularMovies(): State<List<Movie>> {
         return try {
-            cloudDataSource.fetchPopularMovies().movies.map {
-                it.map()
-            }
+            State.Success(cloudDataSource.fetchPopularMovies().movies.map {
+                mapper.mapToDomain(it)
+            })
         } catch (e: Exception) {
-            throw e
+            State.Error("Something went wrong.")
         }
     }
 
-    override suspend fun fetchNowPlayingMovies(): List<Movie> {
+    override suspend fun fetchNowPlayingMovies(): State<List<Movie>> {
         return try {
-            cloudDataSource.fetchNowPlayingMovies().movies.map {
-                it.map()
-            }
+            State.Success(
+                cloudDataSource.fetchNowPlayingMovies()
+                    .movies.map {
+                        mapper.mapToDomain(it)
+                    })
         } catch (e: Exception) {
-            throw e
+            State.Error("Something went wrong.")
         }
     }
 
-    override fun fetchFavoritesMovies(): Flow<List<Movie>> {
+    override fun fetchFavoritesMovies(): Flow<State<List<Movie>>> {
         return try {
             localDataSource.fetchFavoriteMovies().map { movies ->
-                movies.map {
-                    it.map()
-                }
+                State.Success(
+                    movies.map {
+                        mapper.mapToDomain(it)
+                    })
             }
         } catch (e: Exception) {
-            throw e
+            flow {
+                emit(State.Error("Something went wrong."))
+            }
         }
     }
 
     override suspend fun addMovieToFavorite(movie: Movie) {
         localDataSource.addMovie(
-            MovieDto(
-                movie.adult,
-                movie.id,
-                movie.overview,
-                movie.posterPath,
-                movie.releaseDate,
-                movie.title,
-                movie.voteAverage
-            )
+            mapper.mapToData(movie)
         )
     }
 
     override suspend fun deleteMovieFromFavorite(movie: Movie) {
         localDataSource.deleteMovie(
-            MovieDto(
-                movie.adult,
-                movie.id,
-                movie.overview,
-                movie.posterPath,
-                movie.releaseDate,
-                movie.title,
-                movie.voteAverage
-            )
+            mapper.mapToData(movie)
         )
     }
 
-    override suspend fun fetchMovieTrailerById(id: Int): String {
+    override suspend fun fetchMovieTrailerById(id: Int): State<String> {
         return try {
-            cloudDataSource.fetchMovieTrailerById(id).results[1].key
+            State.Success(
+                cloudDataSource.fetchMovieTrailerById(id).results[1].key
+            )
         } catch (e: Exception) {
-            throw e
+            State.Error("Something went wrong.")
         }
     }
 
-    override suspend fun fetchActorsCast(id: Int): List<Cast> {
+    override suspend fun fetchActorsCast(id: Int): State<List<Cast>> {
         return try {
-            cloudDataSource.fetchActorsCast(id).cast
+            State.Success(cloudDataSource.fetchActorsCast(id).cast.map {
+                it.map()
+            })
         } catch (e: Exception) {
-            throw e
+            State.Error("Something went wrong.")
         }
     }
 }

@@ -1,8 +1,7 @@
-package com.example.movies.data
+package com.example.movies.data.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.movies.domain.Movie
 import com.squareup.moshi.Json
 
 @Entity(tableName = "favorite_movies")
@@ -22,14 +21,4 @@ data class MovieDto(
     val title: String,
     @field:Json(name = "vote_average")
     val voteAverage: Double,
-) {
-    fun map() = Movie(
-        adult,
-        id,
-        overview,
-        posterPath,
-        releaseDate,
-        title,
-        voteAverage
-    )
-}
+)

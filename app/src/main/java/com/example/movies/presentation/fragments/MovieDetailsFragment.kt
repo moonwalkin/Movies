@@ -3,14 +3,16 @@ package com.example.movies.presentation.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.movies.R
 import com.example.movies.databinding.FragmentMovieDetailsBinding
-import com.example.movies.domain.Movie
-import com.example.movies.presentation.MoviesViewModel
+import com.example.movies.databinding.LayoutResultBinding
+import com.example.movies.domain.entity.Movie
 import com.example.movies.presentation.adapter.ActorCastAdapter
 import com.example.movies.presentation.navigate
+import com.example.movies.presentation.viewmodels.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,12 +26,45 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>() {
         super.onViewCreated(view, savedInstanceState)
         val movie = requireArguments().getSerializable(MOVIE_DETAILS) as Movie
         viewModel.fetchActorsCast(movie.id)
+        observe()
+        initViews(movie)
+    }
+
+    private fun observe() {
+        val resultBinding = LayoutResultBinding.bind(binding.root)
         observe {
-            viewModel.items.collect {
-                adapter.submitList(it)
+            viewModel.items.collect { state ->
+                renderState(
+                    root = binding.root,
+                    state = state,
+                    onSuccess = {
+                        setVisibilityView(true)
+                        adapter.submitList(it)
+                    },
+                    onError = {
+                        resultBinding.errorContainer.isVisible = true
+                        resultBinding.tvErrorMessage.text = it
+                    },
+                    onLoading = {
+                        resultBinding.progressBar.isVisible = true
+                    }
+                )
             }
         }
-        initViews(movie)
+    }
+
+    private fun setVisibilityView(isVisible: Boolean) {
+        binding.apply {
+            castRecycler.isVisible = isVisible
+            fabFavorite.isVisible = isVisible
+            tvIsAdult.isVisible = isVisible
+            tvOverview.isVisible = isVisible
+            ivPoster.isVisible = isVisible
+            tvTitle.isVisible = isVisible
+            scrollView.isVisible = isVisible
+            tvRealiseDate.isVisible = isVisible
+            btnPlayTrailer.isVisible = isVisible
+        }
     }
 
     private fun initViews(movie: Movie) {

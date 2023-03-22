@@ -1,6 +1,6 @@
 package com.example.movies.data.sources.local
 
-import com.example.movies.data.MovieDto
+import com.example.movies.data.models.MovieDto
 import kotlinx.coroutines.flow.Flow
 
 interface LocalDataSource {

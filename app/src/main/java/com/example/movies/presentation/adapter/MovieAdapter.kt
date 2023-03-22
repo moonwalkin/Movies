@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.example.movies.databinding.LayoutMovieBinding
-import com.example.movies.domain.Movie
+import com.example.movies.domain.entity.Movie
 
 class MovieAdapter(private val listener: (Movie) -> Unit) : ListAdapter<Movie, MovieViewHolder>(
     MovieDifUtil
