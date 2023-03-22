@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebView
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.movies.databinding.FragmentTrailerBinding
 import com.example.movies.databinding.LayoutResultBinding
+import com.example.movies.presentation.navigate
 import com.example.movies.presentation.viewmodels.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,6 +40,7 @@ class TrailerFragment : BaseFragment<FragmentTrailerBinding>() {
                     state = state,
                     onSuccess = {
                         webView.loadUrl("https://www.youtube.com/watch?v=$it")
+                        navigate().close()
                     },
                     onError = {
                         resultBinding.errorContainer.isVisible = true

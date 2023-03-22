@@ -1,6 +1,5 @@
 package com.example.movies.data.sources.remote
 
-import android.util.Log
 import com.example.movies.data.models.CastResponse
 import com.example.movies.data.network.MovieService
 import com.example.movies.data.models.MoviesResponse
@@ -11,7 +10,6 @@ class CloudDataSourceImpl @Inject constructor(private val movieService: MovieSer
     CloudDataSource {
     override suspend fun fetchPopularMovies(page: Int): MoviesResponse {
         return try {
-            Log.d("TAG", "called")
             movieService.fetchPopularMovies(page)
         } catch (e: Exception) {
             throw e
@@ -27,10 +25,18 @@ class CloudDataSourceImpl @Inject constructor(private val movieService: MovieSer
     }
 
     override suspend fun fetchMovieTrailerById(movieId: Int): TrailerResponse {
-        return movieService.fetchTrailerById(movieId = movieId)
+        return try {
+            movieService.fetchTrailerById(movieId = movieId)
+        } catch (e: Exception) {
+            throw e
+        }
     }
 
     override suspend fun fetchActorsCast(movieId: Int): CastResponse {
-        return movieService.fetchActorsCast(movieId)
+        return try {
+            movieService.fetchActorsCast(movieId)
+        } catch (e: Exception) {
+            throw e
+        }
     }
 }
