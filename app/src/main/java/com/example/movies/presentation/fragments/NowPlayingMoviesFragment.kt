@@ -2,6 +2,7 @@ package com.example.movies.presentation.fragments
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.example.movies.databinding.FragmentNowPlayingMoviesBinding
 import com.example.movies.databinding.LayoutResultBinding
@@ -36,15 +37,15 @@ class NowPlayingMoviesFragment : BaseFragment<FragmentNowPlayingMoviesBinding>()
                     root = binding.root,
                     state = state,
                     onSuccess = {
-                        binding.movieRecycler.visibility = View.VISIBLE
+                        binding.movieRecycler.isVisible = true
                         adapter.submitList(it)
                     },
                     onError = {
-                        resultBinding.errorContainer.visibility = View.VISIBLE
+                        resultBinding.errorContainer.isVisible = true
                         resultBinding.tvErrorMessage.text = it
                     },
                     onLoading = {
-                        resultBinding.progressBar.visibility = View.VISIBLE
+                        resultBinding.progressBar.isVisible = true
                     }
                 )
             }
