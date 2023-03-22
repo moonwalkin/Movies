@@ -33,7 +33,7 @@ class CommonRepositoryImpl @Inject constructor(
             }
             State.Success(listOfPopularMovies)
         } catch (e: Exception) {
-            State.Error("Something went wrong.")
+            State.Error("Something went wrong...")
         }
     }
 
