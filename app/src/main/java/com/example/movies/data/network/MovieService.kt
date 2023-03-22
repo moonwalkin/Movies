@@ -5,10 +5,11 @@ import com.example.movies.data.models.MoviesResponse
 import com.example.movies.data.models.TrailerResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface MovieService {
     @GET("popular")
-    suspend fun fetchPopularMovies(): MoviesResponse
+    suspend fun fetchPopularMovies(@Query("page") page: Int): MoviesResponse
 
     @GET("now_playing")
     suspend fun fetchLatestMovies(): MoviesResponse

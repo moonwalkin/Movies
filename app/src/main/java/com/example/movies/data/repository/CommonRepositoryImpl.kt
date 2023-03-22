@@ -18,11 +18,20 @@ class CommonRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource,
     private val mapper: Mapper<MovieDto, Movie>
 ) : CommonRepository {
+
+    private val listOfPopularMovies = mutableListOf<Movie>()
+    var page = 1
+
     override suspend fun fetchPopularMovies(): State<List<Movie>> {
+        val response = cloudDataSource.fetchPopularMovies(1)
         return try {
-            State.Success(cloudDataSource.fetchPopularMovies().movies.map {
-                mapper.mapToDomain(it)
-            })
+            if (page < response.totalPages) {
+                listOfPopularMovies.addAll(cloudDataSource.fetchPopularMovies(page).movies.map {
+                    mapper.mapToDomain(it)
+                })
+                page++
+            }
+            State.Success(listOfPopularMovies)
         } catch (e: Exception) {
             State.Error("Something went wrong.")
         }
