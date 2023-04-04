@@ -38,7 +38,6 @@ class MoviesViewModel @Inject constructor(
     }
 
     fun fetchActorsCast(id: Int) = viewModelScope.launch(dispatcher) {
-        _items.emit(State.Loading())
         _items.emit(fetchActorsCastUseCase(id))
     }
 }

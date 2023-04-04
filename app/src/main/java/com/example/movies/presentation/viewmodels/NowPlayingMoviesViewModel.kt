@@ -1,7 +1,6 @@
 package com.example.movies.presentation.viewmodels
 
 import androidx.lifecycle.viewModelScope
-import com.example.movies.domain.State
 import com.example.movies.domain.entity.Movie
 import com.example.movies.domain.usecases.FetchNowPlayingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,8 +15,11 @@ class NowPlayingMoviesViewModel @Inject constructor(
     private val dispatcher: CoroutineDispatcher = Dispatchers.Main
 ) : BaseViewModel<List<Movie>>() {
 
+    init {
+        fetchNowPlayingMovies()
+    }
+
     fun fetchNowPlayingMovies() = viewModelScope.launch(dispatcher) {
-        _items.emit(State.Loading())
         _items.emit(fetchNowPlayingMoviesUseCase())
     }
 }

@@ -25,7 +25,6 @@ class NowPlayingMoviesFragment : BaseFragment<FragmentNowPlayingMoviesBinding>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.movieRecycler.adapter = adapter
-        viewModel.fetchNowPlayingMovies()
         observe()
     }
 
@@ -55,3 +54,4 @@ class NowPlayingMoviesFragment : BaseFragment<FragmentNowPlayingMoviesBinding>()
         }
     }
 }
+

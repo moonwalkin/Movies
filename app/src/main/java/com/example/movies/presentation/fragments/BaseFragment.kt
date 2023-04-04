@@ -24,7 +24,6 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = receiveView()
-
         return binding.root
     }
 
@@ -35,7 +34,7 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
 
     protected fun observe(body: suspend () -> Unit) {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 body()
             }
         }

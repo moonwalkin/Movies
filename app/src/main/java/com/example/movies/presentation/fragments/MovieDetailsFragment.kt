@@ -2,7 +2,6 @@ package com.example.movies.presentation.fragments
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -88,12 +87,5 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>() {
                 .error(R.drawable.error)
                 .into(ivPoster)
         }
-    }
-
-    companion object {
-
-        private const val MOVIE_DETAILS = "movie_details"
-
-        fun createArgs(movie: Movie) = bundleOf(MOVIE_DETAILS to movie)
     }
 }
