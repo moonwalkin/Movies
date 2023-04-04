@@ -1,7 +1,6 @@
 package com.example.movies.presentation.viewmodels
 
 import androidx.lifecycle.viewModelScope
-import com.example.movies.domain.State
 import com.example.movies.domain.entity.Movie
 import com.example.movies.domain.usecases.DeleteMovieFromFavoriteUseCase
 import com.example.movies.domain.usecases.FetchFavoriteMoviesUseCase
@@ -18,13 +17,16 @@ class FavoriteMoviesViewModel @Inject constructor(
     private val dispatcher: CoroutineDispatcher = Dispatchers.Main
 ) : BaseViewModel<List<Movie>>() {
 
+    init {
+        fetchFavoriteMovies()
+    }
+
     fun deleteFromFavorite(movie: Movie) = viewModelScope.launch(dispatcher) {
         deleteMovieFromFavoriteUseCase(movie)
     }
 
     fun fetchFavoriteMovies() {
         viewModelScope.launch(dispatcher) {
-            _items.emit(State.Loading())
             fetchMovieFromFavoriteUseCase().collect {
                 _items.emit(it)
             }
