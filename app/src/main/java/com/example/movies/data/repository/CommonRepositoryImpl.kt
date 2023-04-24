@@ -1,7 +1,6 @@
 package com.example.movies.data.repository
 
-import com.example.movies.data.mapper.Mapper
-import com.example.movies.data.models.MovieDto
+import com.example.movies.data.mapper.MovieMapper
 import com.example.movies.data.sources.local.LocalDataSource
 import com.example.movies.data.sources.remote.CloudDataSource
 import com.example.movies.domain.State
@@ -16,7 +15,7 @@ import javax.inject.Inject
 class CommonRepositoryImpl @Inject constructor(
     private val cloudDataSource: CloudDataSource,
     private val localDataSource: LocalDataSource,
-    private val mapper: Mapper<MovieDto, Movie>
+    private val mapper: MovieMapper
 ) : CommonRepository {
 
     private val listOfPopularMovies = mutableListOf<Movie>()
@@ -26,7 +25,7 @@ class CommonRepositoryImpl @Inject constructor(
         return try {
             if (page < 100) {
                 listOfPopularMovies.addAll(cloudDataSource.fetchPopularMovies(page).movies.map {
-                    mapper.mapToDomain(it)
+                    mapper.reverseMap(it)
                 })
                 page++
             }
@@ -41,7 +40,7 @@ class CommonRepositoryImpl @Inject constructor(
             State.Success(
                 cloudDataSource.fetchNowPlayingMovies()
                     .movies.map {
-                        mapper.mapToDomain(it)
+                        mapper.reverseMap(it)
                     })
         } catch (e: Exception) {
             State.Error("Something went wrong.")
@@ -53,7 +52,7 @@ class CommonRepositoryImpl @Inject constructor(
             localDataSource.fetchFavoriteMovies().map { movies ->
                 State.Success(
                     movies.map {
-                        mapper.mapToDomain(it)
+                        mapper.reverseMap(it)
                     })
             }
         } catch (e: Exception) {
@@ -65,13 +64,13 @@ class CommonRepositoryImpl @Inject constructor(
 
     override suspend fun addMovieToFavorite(movie: Movie) {
         localDataSource.addMovie(
-            mapper.mapToData(movie)
+            mapper.map(movie)
         )
     }
 
     override suspend fun deleteMovieFromFavorite(movie: Movie) {
         localDataSource.deleteMovie(
-            mapper.mapToData(movie)
+            mapper.map(movie)
         )
     }
 
