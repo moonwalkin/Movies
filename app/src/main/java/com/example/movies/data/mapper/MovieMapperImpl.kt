@@ -4,8 +4,8 @@ import com.example.movies.data.models.MovieDto
 import com.example.movies.domain.entity.Movie
 import javax.inject.Inject
 
-class MapperImpl @Inject constructor() : Mapper<MovieDto, Movie> {
-    override fun mapToDomain(item: MovieDto): Movie {
+class MovieMapperImpl @Inject constructor() : MovieMapper {
+    override fun reverseMap(item: MovieDto): Movie {
         return Movie(
             item.adult,
             item.id,
@@ -17,7 +17,7 @@ class MapperImpl @Inject constructor() : Mapper<MovieDto, Movie> {
         )
     }
 
-    override fun mapToData(item: Movie): MovieDto {
+    override fun map(item: Movie): MovieDto {
         return MovieDto(
             item.adult,
             item.id,

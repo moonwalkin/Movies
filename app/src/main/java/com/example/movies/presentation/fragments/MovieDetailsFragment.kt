@@ -11,7 +11,7 @@ import com.example.movies.databinding.FragmentMovieDetailsBinding
 import com.example.movies.databinding.LayoutResultBinding
 import com.example.movies.domain.entity.Movie
 import com.example.movies.presentation.viewmodels.MoviesViewModel
-import com.example.movies.presentation.adapter.ActorCastAdapter
+import com.example.movies.presentation.adapter.actor.ActorCastAdapter
 import com.example.movies.presentation.navigate
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,7 +39,7 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>() {
                     root = binding.root,
                     state = state,
                     onSuccess = {
-                        setVisibilityView(true)
+                        setVisibilityView()
                         adapter.submitList(it)
                     },
                     onError = {
@@ -54,17 +54,17 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>() {
         }
     }
 
-    private fun setVisibilityView(isVisible: Boolean) {
+    private fun setVisibilityView() {
         binding.apply {
-            castRecycler.isVisible = isVisible
-            fabFavorite.isVisible = isVisible
-            tvIsAdult.isVisible = isVisible
-            tvOverview.isVisible = isVisible
-            ivPoster.isVisible = isVisible
-            tvTitle.isVisible = isVisible
-            scrollView.isVisible = isVisible
-            tvRealiseDate.isVisible = isVisible
-            btnPlayTrailer.isVisible = isVisible
+            castRecycler.isVisible = true
+            fabFavorite.isVisible = true
+            tvIsAdult.isVisible = true
+            tvOverview.isVisible = true
+            ivPoster.isVisible = true
+            tvTitle.isVisible = true
+            scrollView.isVisible = true
+            tvRealiseDate.isVisible = true
+            btnPlayTrailer.isVisible = true
         }
     }
 

@@ -6,7 +6,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.example.movies.databinding.FragmentNowPlayingMoviesBinding
 import com.example.movies.databinding.LayoutResultBinding
-import com.example.movies.presentation.adapter.MovieAdapter
+import com.example.movies.presentation.adapter.movie.MovieAdapter
 import com.example.movies.presentation.navigate
 import com.example.movies.presentation.viewmodels.NowPlayingMoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint

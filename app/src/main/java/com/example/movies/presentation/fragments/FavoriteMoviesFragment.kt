@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movies.databinding.FragmentFavoriteMoviesBinding
 import com.example.movies.databinding.LayoutResultBinding
-import com.example.movies.presentation.adapter.MovieAdapter
+import com.example.movies.presentation.adapter.movie.MovieAdapter
 import com.example.movies.presentation.navigate
 import com.example.movies.presentation.viewmodels.FavoriteMoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint

@@ -1,9 +1,7 @@
 package com.example.movies.di
 
-import com.example.movies.data.mapper.Mapper
-import com.example.movies.data.mapper.MapperImpl
-import com.example.movies.data.models.MovieDto
-import com.example.movies.domain.entity.Movie
+import com.example.movies.data.mapper.MovieMapper
+import com.example.movies.data.mapper.MovieMapperImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -16,5 +14,5 @@ interface MapperModule {
 
     @Binds
     @Singleton
-    fun bindMapper(mapper: MapperImpl): Mapper<MovieDto, Movie>
+    fun bindMapper(mapper: MovieMapperImpl): MovieMapper
 }
